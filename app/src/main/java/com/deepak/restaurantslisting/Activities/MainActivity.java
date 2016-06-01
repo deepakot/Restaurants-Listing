@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     String city = addresses.get(0).getLocality();
                     location_text.setText(address+", "+city);
                 }
+                else{
+                    gps.showSettingsAlert();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e){
@@ -102,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                             String address = addresses.get(0).getAddressLine(0);
                             String city = addresses.get(0).getLocality();
                             location_text.setText(address+", "+city);
+                        }
+                        else{
+                            gps.showSettingsAlert();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -193,7 +199,10 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
                     JSONArray array2 = obj.getJSONArray(AppConstants.Categories);
                     for(int j = 0; j < array2.length(); j++) {
                         JSONObject obj3 = array2.getJSONObject(j);
-                        categories.add(obj3.get(AppConstants.Name).toString());
+                        if(!categories.contains(obj3.get(AppConstants.Name).toString()))
+                        {
+                            categories.add(obj3.get(AppConstants.Name).toString());
+                        }
                     }
                     restaurant = new RestaurantData(image,name,locality,false,noOfCoupons,lat,lang,dist[0],categories);
                     restData.add(restaurant);
